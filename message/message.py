@@ -2,52 +2,53 @@ from settings.config import IMConfig
 from datetime import datetime
 import re
 
+
 class Sender():
     name: str
+
     def __init__(self, name, *args, **kwargs):
         self.name = name.title()
-    
+
     def __str__(self):
         return f"{self.name}"
-    
+
     def __repr__(self):
         return f"Sender('{self.name}')"
-    
+
     def __eq__(self, value):
         if isinstance(value, str):
             return self.name == value
         elif issubclass(type(value), Sender):
             return self.name == value.name
         raise TypeError(f'{value} should either be an instance of str or Sender')
-    
+
 
 class Text():
-    
+
     def __init__(self, text: str, *args, **kwargs):
         self.text = text
         self.config = IMConfig()
-        
+
     def get_clean_text(self):
         pass
-    
+
     def get_words(self):
         return re.findall(self.config.word_regex, self.text)
 
-    
     def get_char_count(self):
         return len(re.findall(self.config.char_regex, self.text))
-    
+
     def get_word_count(self):
         return len(self.get_words())
 
     def __str__(self):
         return f"{self.text}"
-    
+
     def __repr__(self):
         return f"Text('{self.text}')"
 
-class Message():
 
+class Message():
     date_time: datetime
     is_media: bool = False
 
@@ -73,7 +74,7 @@ class Message():
                 date_time = datetime.strptime(date_time, "%d/%m/%Y, %H:%M")
             except TypeError:
                 print("Sorry the date provided should be the datetime object or in the format dd/mm/YYYY, H:M")
-    #         parse datetime and store
+        #         parse datetime and store
         self.date_time = date_time
 
     def add_sender(self, sender):
@@ -103,4 +104,3 @@ class Message():
         m.add_sender(sender=sender)
         m.add_text(text=text)
         return m
-    

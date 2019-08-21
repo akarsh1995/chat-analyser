@@ -1,18 +1,14 @@
-# Manual
-
-feature_addition.txt
-data/*
-
-# exercism folder
-*/.Rhistory
+### Manual ###
+data/
+.DS_Store
 temp.py
-**/tempCodeRunnerFile.py
 
-# Created by https://www.gitignore.io/api/code,python,pycharm+all
-# Edit at https://www.gitignore.io/?templates=code,python,pycharm+all
+# Created by https://www.gitignore.io/api/code,pycharm+all
+# Edit at https://www.gitignore.io/?templates=code,pycharm+all
 
 ### Code ###
-.vscode/
+.vscode/*
+
 ### PyCharm+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -43,10 +39,12 @@ temp.py
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
-# auto-import.
-# .idea/modules.xml
-# .idea/*.iml
-# .idea/modules
+auto-import.
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+*.iml
+*.ipr
 
 # CMake
 cmake-build-*/
@@ -81,9 +79,6 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-# JetBrains templates
-**___jb_tmp___
-
 ### PyCharm+all Patch ###
 # Ignores the whole .idea folder and all .iml files
 # See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
@@ -99,6 +94,12 @@ modules.xml
 
 # Sonarlint plugin
 .idea/sonarlint
+
+# End of https://www.gitignore.io/api/code,pycharm+all
+
+
+# Created by https://www.gitignore.io/api/python
+# Edit at https://www.gitignore.io/?templates=python
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -161,6 +162,7 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
+db.sqlite3-journal
 
 # Flask stuff:
 instance/
@@ -188,7 +190,7 @@ ipython_config.py
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don’t work, or not
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
 #Pipfile.lock
 
@@ -225,12 +227,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# End of https://www.gitignore.io/api/code,python,pycharm+all
-
-data/WhatsApp Chat with 6\.023 x 10\^23 \(2\)\.txt
-
-data/WhatsApp Chat with 6\.023 x 10\^23\.txt
-
-data/WhatsApp Chat with akarsh D2 \(1\)\.txt
-
-data/WhatsApp Chat with akarsh D2\.txt
+# End of https://www.gitignore.io/api/python
+/feature_addition.txt

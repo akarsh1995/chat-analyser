@@ -1,8 +1,8 @@
 from settings import config
 import re
 
-class Parser():
 
+class Parser:
     group_conversations = []
     personal_conversations = []
     conversations = []

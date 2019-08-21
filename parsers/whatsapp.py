@@ -4,12 +4,13 @@ from parsers.parser import Parser
 from message.message import Message
 from conversation.conversation import Conversation
 from settings.config import IMConfig
+import pandas as pd
 
 
 class WhatsAppConfig(IMConfig):
 
     def __init__(self):
-        self.date_pattern = '\d?\d/\d\d/\d\d, \d\d:\d\d'
+        self.date_pattern = r'\d?\d/\d\d/\d\d, \d?\d:\d\d [ap]m'
 
     def __str__(self):
         return f"WhatsApp Generated File Configuration"
@@ -22,12 +23,14 @@ class WhatsAppConfig(IMConfig):
     def IM_text_split_at(self):
         return r'\n(?={} - )'.format(self.date_pattern)
 
+
 class WhatsappParser(Parser):
 
     def __init__(self, filepath, *args, **kwargs):
         super().__init__(filepath, *args, **kwargs)
         self.config = WhatsAppConfig()
         self.set_date_format()
+        self.chat_df = pd.read_csv(filepath, sep='\n+', header=None)
 
     @staticmethod
     def get_date_time(match_obj, date_time_fmt):
@@ -69,5 +72,14 @@ class WhatsappParser(Parser):
         pattern = r'^(?:\d?\d)\/(\d+)\/'
         month_deciding_range = [int(re.match(pattern, text).group(1)) for text in self.get_splitted_texts()]
         if max(month_deciding_range) > 12:
-            f = '%m/%d/%y, %H:%M'
+            f = '%m/%d/%y, %I:%M %p'
             self.config.date_strptime_fmt = f
+
+    def parse_datetime(self):
+        self.chat_df['Timestamp'] = pd.to_datetime(self.chat_df['Timestamp'])
+
+    def set_parsed_df(self):
+        self.chat_df = self.chat_df[0].str.split(' - ', 1, expand=True)
+        self.chat_df = pd.concat([self.chat_df[0], self.chat_df[1].str.split(':', 1, expand=True)], axis=1)
+        self.chat_df.columns = ['Timestamp', 'Sender', 'Text']
+        self.chat_df = self.chat_df[self.chat_df['Timestamp'].str.contains(r'^\d\d?\/')]
