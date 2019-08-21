@@ -16,11 +16,12 @@ class Conversation:
     def __init__(self, messages, *args, **kwargs):
         if not isinstance(messages, list):
             messages += [messages]
-        if all([isinstance(msg, Message) for msg in messages]):
+        if all([issubclass(type(msg), Message) for msg in messages]):
             self._messages = messages
         else:
             raise TypeError(f'Not all the messages is the instance of {type(Message)}')
-        self.populate_senders()
+        if self.messages_are_present:
+            self.populate_senders()
 
     def message_count(self):
         message_count = {}
@@ -74,14 +75,14 @@ class Conversation:
 
     def weekdaywise_count(self):
         counter = Counter()
-        if self._messages_are_present:
+        if self.messages_are_present:
             for message in self._messages:
                 counter.update([message.date_time.strftime("%A")])
         return counter
 
     def hourwise_count(self):
         counter = Counter()
-        if self._messages_are_present:
+        if self.messages_are_present:
             for message in self._messages:
                 counter.update([message.date_time.hour])
         return counter
@@ -92,9 +93,9 @@ class Conversation:
 
     def populate_senders(self):
         senders = []
-        if self._messages_are_present:
+        if self.messages_are_present:
             for message in self._messages:
-                if not message.sender in senders:
+                if message.sender not in senders:
                     senders += [message.sender]
             self._senders = senders
         else:
@@ -118,7 +119,7 @@ class Conversation:
         if sender:
             if sender in self._senders:
                 if to_name:
-                    if self._messages_are_present:
+                    if self.messages_are_present:
                         for message in self._messages:
                             if sender == message.sender:
                                 message.add_sender(to_name)
@@ -150,7 +151,7 @@ class Conversation:
             return self._senders_message_list
 
         senders_message_list = defaultdict(list)
-        if self._messages_are_present:
+        if self.messages_are_present:
             for message in self._messages:
                 senders_message_list[message.sender.name].append(message)
         self._senders_message_list = senders_message_list
@@ -168,7 +169,7 @@ class Conversation:
 
     def get_convo_df(self):
         m_dict = defaultdict(list)
-        if self._messages_are_present:
+        if self.messages_are_present:
             for message in self._messages:
                 if not message.is_media:
                     m_dict['date_time'] += [message.date_time]
@@ -177,12 +178,12 @@ class Conversation:
         return pd.DataFrame(m_dict)
 
     @property
-    def _messages_are_present(self):
+    def messages_are_present(self):
         return bool(self._messages)
 
     def most_active_day(self):
         counter = Counter()
-        if self._messages_are_present:
+        if self.messages_are_present:
             for message in self._messages:
                 counter.update([message.date_time.date()])
         return (

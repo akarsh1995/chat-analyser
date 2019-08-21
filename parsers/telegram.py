@@ -46,7 +46,7 @@ class TelegramMessageObject(Message):
 
     def __init__(self, message: dict, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.message = message
+        self.t_message_dict = message
         if not self.is_bad():
             self.add_date_time(self.get_date_time())
             self.add_sender(self.get_sender())
@@ -57,29 +57,29 @@ class TelegramMessageObject(Message):
         return self.get_type() in self._bad_types
 
     def get_id(self):
-        return self.message.get('id')
+        return self.t_message_dict.get('id')
 
     def get_type(self):
-        return self.message.get('type')
+        return self.t_message_dict.get('type')
 
     def get_date_time(self):
         from datetime import datetime
-        return datetime.fromisoformat(self.message.get('date'))
+        return datetime.fromisoformat(self.t_message_dict.get('date'))
 
     def get_sender(self):
-        return self.message.get('from')
+        return self.t_message_dict.get('from')
 
     def from_id(self):
-        return self.message.get('from_id')
+        return self.t_message_dict.get('from_id')
 
     def get_text(self):
-        return Text(self.message.get('text')).get_text()
+        return Text(self.t_message_dict.get('text')).get_text()
 
     def set_media(self):
         self.is_media = bool(self.get_media_type())
 
     def get_media_type(self):
-        return self.message.get('media_type')
+        return self.t_message_dict.get('media_type')
 
 
 class TelegramTextMessageObject(TelegramMessageObject):
@@ -89,9 +89,10 @@ class TelegramTextMessageObject(TelegramMessageObject):
 class TelegramConversationObject(Conversation):
 
     def __init__(self, conversation_dict, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self.conversation_dict = conversation_dict
-        self.populate_messages()
+        messages = self.extract_messages()
+        if messages:
+            super().__init__(messages)
 
     @property
     def conversation_type(self):
@@ -100,11 +101,11 @@ class TelegramConversationObject(Conversation):
     def conversation_id(self):
         return self.conversation_dict['id']
 
-    def populate_messages(self):
+    def extract_messages(self):
         messages = self.conversation_dict["messages"]
         messages = [TelegramTextMessageObject(message) for message in messages]
         messages = [message for message in messages if not message.is_bad()]
-        self.messages = messages
+        return messages
 
     @property
     def is_personal(self):
@@ -114,20 +115,12 @@ class TelegramConversationObject(Conversation):
     def name(self):
         return self.conversation_dict["name"]
 
-    def __iter__(self):
-        self.counter = 0
-        return self
-
-    def __next__(self):
-        message = self.messages[self.counter]
-        self.counter += 1
-        return message
-
     def filter(self):
         pass
 
 
 class TelegramParser(Parser):
+    conversations = []
 
     def __init__(self, filepath, *args, **kwargs):
         super().__init__(filepath, *args, **kwargs)
@@ -138,7 +131,10 @@ class TelegramParser(Parser):
             print('Already parsed.')
         conversations = self.parsed_file['chats']['list']
         if conversations:
-            self.conversations += [TelegramConversationObject(conversation) for conversation in conversations]
+            for conversation in conversations:
+                conversation_obj = TelegramConversationObject(conversation)
+                if conversation_obj.messages_are_present:
+                    self.conversations.append(conversation_obj)
 
     @property
     def conversations_are_present(self):

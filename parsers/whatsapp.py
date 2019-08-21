@@ -5,6 +5,7 @@ import pandas as pd
 
 
 class WhatsappParser(Parser):
+    conversations = []
 
     def __init__(self, filepath, *args, **kwargs):
         super().__init__(filepath, *args, **kwargs)
@@ -17,7 +18,7 @@ class WhatsappParser(Parser):
             if '<Media omitted>' in text:
                 m.set_media()
             messages.append(m)
-        self.conversations = [Conversation(messages)]
+        self.conversations += [Conversation(messages)]
 
     def set_parsed_df(self):
         chat_df = pd.read_csv(self.filepath, sep='\n', header=None)

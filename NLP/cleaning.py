@@ -5,8 +5,8 @@ from typing import List
 import os
 import uuid
 
-class WordCloudGenerate():
 
+class WordCloudGenerate:
     text: str
     stopwords: List[str] = []
     # max_words: int max_words
