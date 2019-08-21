@@ -3,7 +3,7 @@ from datetime import datetime
 import re
 
 
-class Sender():
+class Sender:
     name: str
 
     def __init__(self, name, *args, **kwargs):
@@ -23,7 +23,7 @@ class Sender():
         raise TypeError(f'{value} should either be an instance of str or Sender')
 
 
-class Text():
+class Text:
 
     def __init__(self, text: str, *args, **kwargs):
         self.text = text
@@ -48,7 +48,7 @@ class Text():
         return f"Text('{self.text}')"
 
 
-class Message():
+class Message:
     date_time: datetime
     is_media: bool = False
 
@@ -64,9 +64,9 @@ class Message():
     def __eq__(self, other):
         if not isinstance(other, Message):
             raise TypeError(f"Does {type(other)} is not a valid message type.")
-        return self.sender == other.sender and \
-               self.date_time == other.date_time and \
-               self.text == other.text
+        return (self.sender == other.sender
+                and self.date_time == other.date_time
+                and self.text == other.text)
 
     def add_date_time(self, date_time):
         if not isinstance(date_time, datetime):

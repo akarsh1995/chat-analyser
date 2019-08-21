@@ -60,9 +60,9 @@ class Conversation:
         return {k: media_count(v) for k, v in msg_by_sender.items()}
 
     def top_frequency_words(self, n) -> dict:
-        '''
+        """
         returns: dictionary
-        '''
+        """
         top_frequency_words = {}
         for sender, messages in self.messages_by_sender().items():
             counter = Counter()
@@ -205,8 +205,8 @@ class Conversation:
         conversation_stretch = []
         for date_time_set in date_times:
             conversation_stretch.append(date_time_set[-1] - date_time_set[0])
-        max_conv_stretch = max(conversation_stretch)
-        idx = conversation_stretch.index(max_conv_stretch)
+        max_conversation_stretch = max(conversation_stretch)
+        idx = conversation_stretch.index(max_conversation_stretch)
         max_datetime = date_times[idx]
         message_count = len(max_datetime)
         starts_at, ends_at = max_datetime[0].item(), max_datetime[-1].item()

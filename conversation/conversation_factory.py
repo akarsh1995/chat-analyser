@@ -1,5 +1,6 @@
 import conversation.conversation as conv
 
+
 class ConversationFactory():
     def __init__(self):
         self._conversation_type = {

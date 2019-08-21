@@ -1,7 +1,7 @@
 ### Manual ###
 data/
 .DS_Store
-temp.py
+junk/temp.py
 
 # Created by https://www.gitignore.io/api/code,pycharm+all
 # Edit at https://www.gitignore.io/?templates=code,pycharm+all
@@ -228,4 +228,5 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/python
-/feature_addition.txt
+/junk/feature_addition.txt
+/junk/
