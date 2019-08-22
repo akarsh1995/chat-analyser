@@ -104,12 +104,15 @@ class Conversation:
     def delete_messages(self, range):
         pass
 
-    def get_messages(self, sender):
+    def get_messages(self, sender, media=True):
         if isinstance(sender, Sender):
             sender = sender.name
         if isinstance(sender, str):
             if sender in self._senders:
-                return self.messages_by_sender()[sender]
+                messages_by_sender = self.messages_by_sender()[sender]
+                if not media:
+                    return [message for message in messages_by_sender if not message.is_media]
+                return messages_by_sender
             else:
                 raise Exception(f"No sender exist by the name {sender}: try names {[s.name for s in self._senders]}")
         else:
@@ -125,24 +128,20 @@ class Conversation:
                                 message.add_sender(to_name)
                         self.populate_senders()
         else:
-            sender, to_name = self._sender_name_input()
+            sender = self._sender_name_input("Pick the sender you want to change the name of ?")
+            print('What name do you want to set ?')
+            to_name = input()
             self.change_sender_name(sender, to_name)
 
-    def _sender_name_input(self):
+    def _sender_name_input(self , message):
         senders_available = [s.name for s in self._senders]
         if senders_available:
-            print('Which sender you want to change the name of:')
+            print(message)
             for i, s in enumerate(senders_available):
                 print(str(i + 1) + ':', s)
             ip = int(input())
             sender_name_change = senders_available[ip - 1]
-            if sender_name_change:
-                print('What name do you want to set ?')
-                ip_name = input()
-                if ip_name:
-                    return sender_name_change, ip_name
-                else:
-                    self._sender_name_input()
+            return sender_name_change
         else:
             raise Exception('No participants are present in the conversation.')
 
@@ -157,10 +156,17 @@ class Conversation:
         self._senders_message_list = senders_message_list
         return senders_message_list
 
-    def save_wordcloud(self):
-        import uuid
-        text = ' '.join([m.text.text for m in self._messages])
-        WordCloudGenerate(text).save_wordcloud(str(uuid.uuid4()) + '.png')
+    def save_wordcloud(self, combined=True, show=True):
+        if combined:
+            text = ' '.join([m.text.text for m in self._messages if not m.is_media])
+        else:
+            sender = self._sender_name_input("Which sender you want to generate the wordcloud of ?")
+            messages = self.get_messages(sender, media=False)
+            text = ' '.join([m.text.text for m in messages])
+        wc = WordCloudGenerate(text, mask_image_path='NLP/data/whatsapp_icon.png')
+        if show:
+            wc.show_wordcloud()
+        wc.save_wordcloud()
 
     def conversation_type(self):
         # self.populate_senders()
@@ -191,15 +197,15 @@ class Conversation:
             counter.most_common(1)[0][1]
         )
 
-    def longest_continue_conversation(self, timegap=5):
-        timegap = np.timedelta64(timegap, 'm')
+    def longest_continue_conversation(self, time_gap=5):
+        time_gap = np.timedelta64(time_gap, 'm')
         date_times = []
         for message in self._messages:
             date_times.append(message.date_time)
         date_times = np.array(date_times, dtype=np.datetime64)
         date_times = date_times.astype('datetime64[m]')
         consecutive_difference = date_times[2:] - date_times[1:-1]
-        split_at = consecutive_difference >= timegap
+        split_at = consecutive_difference >= time_gap
         split_at = np.insert(split_at, 0, True if split_at[0] else False)
         split_slices = np.where(split_at)
         date_times = np.split(date_times, split_slices[0] + 1)
@@ -211,17 +217,7 @@ class Conversation:
         max_datetime = date_times[idx]
         message_count = len(max_datetime)
         starts_at, ends_at = max_datetime[0].item(), max_datetime[-1].item()
-        # starts_at, ends_at = max_datetime[0].item().strftime("%b%e, %y at%l:%M %p"), max_datetime[-1].item().strftime("%b%e, %y at%l:%M %p")
-
-        # d, h, m = Conversation.days_hours_minutes(max_datetime[-1]-max_datetime[0])
-        # print(f"The longest converstaion starts {starts_at} and ends {ends_at}, duration: "
-        #       f"{str(d)+' days' if d else ''}{str(h)+' hrs' if h else ''}{str(m)+' mins' if m else ''}")
         return starts_at, ends_at, message_count
-
-    @staticmethod
-    def days_hours_minutes(td):
-        td = td.item()
-        return td.days, td.seconds // 3600, (td.seconds // 60) % 60
 
     def __str__(self):
         # self.populate_senders()
