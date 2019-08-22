@@ -1,5 +1,4 @@
 ### Manual ###
-./data
 .DS_Store
 junk/temp.py
 
@@ -230,3 +229,4 @@ dmypy.json
 # End of https://www.gitignore.io/api/python
 /junk/feature_addition.txt
 /junk/
+/data/
