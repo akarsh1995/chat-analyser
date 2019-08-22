@@ -73,7 +73,7 @@ class Message:
             try:
                 date_time = datetime.strptime(date_time, "%d/%m/%Y, %H:%M")
             except TypeError:
-                print("Sorry the date provided should be the datetime object or in the format dd/mm/YYYY, H:M")
+                print("Sorry the date provided should be the datetime object or in the im dd/mm/YYYY, H:M")
         #         parse datetime and store
         self.date_time = date_time
 
