@@ -1,0 +1,19 @@
+28/09/18, 1:53 pm - A: hello
+world
+this is the test case input
+file
+24/11/18, 9:33 pm - A: This is the dummy text 🤪
+24/11/18, 10:40 pm - B: This is the dummy text 😛
+26/12/18, 1:59 am - A: This is the dummy text
+26/12/18, 2:00 am - B: This is the dummy text
+03/01/19, 4:08 pm - A: This is the dummy text
+05/01/19, 4:45 pm - A: You deleted this message
+07/01/19, 12:10 am - A: You deleted this message
+07/01/19, 12:17 am - A: Hello world !
+23/01/19, 11:11 pm - A: Foo bar baz
+16/02/19, 8:43 pm - B: <Media omitted>
+16/02/19, 8:46 pm - B: <Media omitted>
+16/02/19, 8:46 pm - B: <Media omitted>
+16/02/19, 8:46 pm - B: <Media omitted>
+16/02/19, 8:46 pm - B: <Media omitted>
+16/02/19, 8:46 pm - B: <Media omitted>

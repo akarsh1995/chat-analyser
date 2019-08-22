@@ -1,5 +1,5 @@
 ### Manual ###
-data/
+./data
 .DS_Store
 junk/temp.py
 

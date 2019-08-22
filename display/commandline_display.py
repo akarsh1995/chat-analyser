@@ -38,7 +38,7 @@ class Display:
         self.display_title()
         self.display_message_count()
         self.display_media_count()
-        self.avg_words_per_message()
+        self.display_words_per_message()
         self.display_character_count()
         self.display_most_active_day()
 
@@ -58,26 +58,13 @@ class Display:
         return self._conversation.media_count(), title
 
     @dict_print
-    def display_word_count(self, title='Word Count'):
+    def display_words_per_message(self, title='Words per Message'):
         """word count of each user"""
-        pass
-
-    @dict_print
-    def display_letter_count(self):
-        """letter count of an individual"""
-        pass
-
-    def avg_letters_per_message(self):
-        """average letters per message"""
-        pass
-
-    @dict_print
-    def avg_words_per_message(self, title='Words per message'):
-        """avg words per message"""
         return self._conversation.words_per_message(), title
 
+    @dict_print
     def display_average_word_length(self):
-        pass
+        return self._conversation.avg_wordlength()
 
     @dict_print
     def display_character_count(self, title='Characters per message'):

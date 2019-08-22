@@ -191,7 +191,7 @@ class Conversation:
             counter.most_common(1)[0][1]
         )
 
-    def longest_continue_conversation(self, timegap):
+    def longest_continue_conversation(self, timegap=5):
         timegap = np.timedelta64(timegap, 'm')
         date_times = []
         for message in self._messages:

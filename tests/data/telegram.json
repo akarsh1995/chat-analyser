@@ -1,0 +1,142 @@
+{
+   "about":"Here is the data you requested. Remember: Telegram is ad free, it doesn't use your data for ad targeting and doesn't sell it to others. Telegram only keeps the information it needs to function as a secure and feature-rich cloud service.\n\nCheck out Settings > Privacy & Security on Telegram's mobile apps for the relevant settings.",
+   "chats":{
+      "about":"This page lists all chats from this export.",
+      "list":[
+         {
+            "name":"A",
+            "type":"personal_chat",
+            "id":5083816460,
+            "messages":[
+               {
+                  "id":24429,
+                  "type":"service",
+                  "date":"2019-02-11T18:39:03",
+                  "edited":"1970-01-01T05:30:00",
+                  "actor":"A",
+                  "actor_id":788849164,
+                  "action":"joined_telegram",
+                  "text":""
+               },
+               {
+                  "id":24430,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:13",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"B",
+                  "from_id":289567837,
+                  "text":"this is a dummy text 123"
+               },
+               {
+                  "id":24431,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:15",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"B",
+                  "from_id":289567837,
+                  "text":"this is a dummy text 123"
+               },
+               {
+                  "id":24432,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:29",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"B",
+                  "from_id":289567837,
+                  "text":"this is a dummy text 123"
+               },
+               {
+                  "id":24433,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:38",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"A",
+                  "from_id":788849164,
+                  "text":"this is a dummy text 123"
+               },
+               {
+                  "id":24434,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:49",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"B",
+                  "from_id":289567837,
+                  "text":[
+                     {
+                        "type":"link",
+                        "text":"this is a dummy text 123"
+                     }
+                  ]
+               }
+            ]
+         },
+         {
+            "name":"C",
+            "type":"personal_chat",
+            "id":5083816460,
+            "messages":[
+               {
+                  "id":24429,
+                  "type":"service",
+                  "date":"2019-02-11T18:39:03",
+                  "edited":"1970-01-01T05:30:00",
+                  "actor":"C",
+                  "actor_id":788849164,
+                  "action":"joined_telegram",
+                  "text":""
+               },
+               {
+                  "id":24430,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:13",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"B",
+                  "from_id":289567837,
+                  "text":"this is a dummy text 123"
+               },
+               {
+                  "id":24431,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:15",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"B",
+                  "from_id":289567837,
+                  "text":"this is a dummy text 123"
+               },
+               {
+                  "id":24432,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:29",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"B",
+                  "from_id":289567837,
+                  "text":"this is a dummy text 123"
+               },
+               {
+                  "id":24433,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:38",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"C",
+                  "from_id":788849164,
+                  "text":"this is a dummy text 123"
+               },
+               {
+                  "id":24434,
+                  "type":"message",
+                  "date":"2019-02-11T21:49:49",
+                  "edited":"1970-01-01T05:30:00",
+                  "from":"B",
+                  "from_id":289567837,
+                  "text":[
+                     {
+                        "type":"link",
+                        "text":"this is a dummy text 123"
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   }
+}

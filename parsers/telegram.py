@@ -6,12 +6,26 @@ from conversation.conversation import Conversation
 # exclude type == service message
 
 
+def _is_normal_text(text):
+    return not isinstance(text, dict)
+
+
+def _is_list(obj):
+    return isinstance(obj, list)
+
+
+def _get_type_and_text(text):
+    if _is_normal_text(text):
+        return 'text', text
+    return text["type"], text["text"]
+
+
 class Text:
     _bad_text_types = ['phone', 'hashtag', 'pre']
 
     def __init__(self, message_texts):
 
-        if not self._is_list(message_texts):
+        if not _is_list(message_texts):
             self.message_text = message_texts
         else:
             self.message_texts = message_texts
@@ -23,21 +37,10 @@ class Text:
     def _get_text(self):
         temp_text = ''
         for text in self.message_texts:
-            text_type, t_text = self._get_type_and_text(text)
+            text_type, t_text = _get_type_and_text(text)
             if text_type not in self._bad_text_types:
                 temp_text += t_text
         return temp_text
-
-    def _get_type_and_text(self, text):
-        if self._is_normal_text(text):
-            return 'text', text
-        return text["type"], text["text"]
-
-    def _is_normal_text(self, text):
-        return not isinstance(text, dict)
-
-    def _is_list(self, obj):
-        return isinstance(obj, list)
 
 
 class TelegramMessageObject(Message):
