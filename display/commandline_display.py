@@ -57,6 +57,7 @@ class Display:
         self.display_character_count()
         self.display_most_active_day()
         self.display_longest_conversation()
+        self.display_wordcloud()
 
     @hash_print
     def display_title(self):
@@ -99,3 +100,6 @@ class Display:
         starts_at, ends_at = map(lambda date_time: date_time.strftime("%b %e, %y at%l:%M %p"), [starts_at, ends_at])
         return (f"The longest conversation starts {starts_at} and ends {ends_at}, duration: "
                 f"{h_m_s_convert(d, h, m)}")
+
+    def display_wordcloud(self):
+        self._conversation.save_wordcloud(combined=True, show=True)

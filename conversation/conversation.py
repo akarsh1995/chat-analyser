@@ -163,7 +163,7 @@ class Conversation:
             sender = self._sender_name_input("Which sender you want to generate the wordcloud of ?")
             messages = self.get_messages(sender, media=False)
             text = ' '.join([m.text.text for m in messages])
-        wc = WordCloudGenerate(text, mask_image_path='NLP/data/whatsapp_icon.png')
+        wc = WordCloudGenerate(text.lower(), mask_image_path='NLP/data/whatsapp_icon.png')
         if show:
             wc.show_wordcloud()
         wc.save_wordcloud()
