@@ -7,6 +7,7 @@ import pandas as pd
 from settings.config import IMConfig
 import re
 from functools import reduce
+from collections import Counter
 
 
 class Conversation:
@@ -167,7 +168,6 @@ class Conversation:
         wc.save_wordcloud()
 
     def conversation_type(self):
-        # self.populate_senders()
         if self._senders:
             return 'group' if len(self._senders) > 2 else 'personal'
 
@@ -217,8 +217,17 @@ class Conversation:
         starts_at, ends_at = max_datetime[0].item(), max_datetime[-1].item()
         return starts_at, ends_at, message_count
 
+    def conversation_starter(self, time_gap):
+        time_delta = np.timedelta64(time_gap, 'm')
+        time_array = np.array([m.date_time for m in self._messages])
+        time_gap = time_array[1:] - time_array[:-1]
+        time_gap_bool = time_gap > time_delta
+        time_gap_bool = np.insert(time_gap_bool, 0, True)
+        conversation_start_array = [m.sender for m, time_bool in zip(self._messages, time_gap_bool) if time_bool]
+        count = Counter([s.name for s in conversation_start_array])
+        return count
+
     def __str__(self):
-        # self.populate_senders()
         if len(self._senders) > 2:
             return f"Group Conversation between {len(self._senders)} people."
         elif len(self._senders) == 2:
