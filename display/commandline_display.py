@@ -81,7 +81,7 @@ class Display:
 
     @dict_print
     def display_average_word_length(self):
-        return self._conversation.avg_wordlength()
+        return self._conversation.avg_word_length()
 
     @dict_print
     def display_character_count(self, title='Characters per message'):

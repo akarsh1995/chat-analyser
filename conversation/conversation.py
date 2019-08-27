@@ -6,6 +6,7 @@ from NLP.cleaning import WordCloudGenerate
 import pandas as pd
 from settings.config import IMConfig
 import re
+from functools import reduce
 
 
 class Conversation:
@@ -38,7 +39,7 @@ class Conversation:
                 words_per_message[sender] = round(average, 2)
         return words_per_message
 
-    def avg_wordlength(self):
+    def avg_word_length(self):
         msg_by_sender = self.messages_by_sender()
         # total chars / total words
         count_chars = lambda text: len(re.findall(IMConfig().char_regex, text))
@@ -101,9 +102,6 @@ class Conversation:
         else:
             raise Exception('Messages are not present in conversation object.')
 
-    def delete_messages(self, range):
-        pass
-
     def get_messages(self, sender, media=True):
         if isinstance(sender, Sender):
             sender = sender.name
@@ -133,7 +131,7 @@ class Conversation:
             to_name = input()
             self.change_sender_name(sender, to_name)
 
-    def _sender_name_input(self , message):
+    def _sender_name_input(self, message):
         senders_available = [s.name for s in self._senders]
         if senders_available:
             print(message)
@@ -232,3 +230,9 @@ class Conversation:
 
     def __repr__(self):
         return self.__str__()
+
+    def __add__(self, *args):
+        if not all([isinstance(arg, Conversation) for arg in args]):
+            raise TypeError(f"Passed arguments are not instance of {type(Conversation)}")
+        messages = reduce(lambda x, y: x+y, [m._messages for m in args])
+        return Conversation(self._messages + messages)

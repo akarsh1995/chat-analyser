@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def get_parsed_df(file_path):
-    chat_df = pd.read_csv(file_path, sep='\n', header=None)
+    chat_df = pd.read_csv(file_path, sep=r'\n+', header=None)
     chat_df['is_date'] = chat_df[0].str.contains(r'^\d?\d/\d?\d').cumsum()
     chat_df = chat_df.groupby('is_date')[[0]].agg(lambda x: '\n'.join(x))
     chat_df = chat_df[0].str.split(' - ', 1, expand=True)
