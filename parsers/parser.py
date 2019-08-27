@@ -10,14 +10,18 @@ class Parser:
     conversations = []
     im: str
 
-    def __init__(self, filepath, *args, **kwargs):
-        self.filepath = filepath
-        self.file_text = self.read_file()
+    def __init__(self, file_paths, *args, **kwargs):
+        if not isinstance(file_paths, list):
+            file_paths = [file_paths]
+        self.file_paths = file_paths
+        self.file_texts = self.read_files()
 
-    def read_file(self):
-        with open(self.filepath, 'r') as chat_file:
-            file_text = chat_file.read()
-        return file_text
+    def read_files(self):
+        file_texts = []
+        for file_path in self.file_paths:
+            with open(file_path, 'r') as chat_file:
+                file_texts.append(chat_file.read())
+        return file_texts
 
     def populate_conversations(self):
         pass
@@ -26,4 +30,4 @@ class Parser:
         return f"{self.guess_im} Parser Object"
 
     def __repr__(self):
-        return f"Parser('{self.filepath}')"
+        return f"Parser('{self.file_paths}')"

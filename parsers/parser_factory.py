@@ -1,6 +1,6 @@
 # In serializers.py
 from parsers.telegram import TelegramParser
-from parsers.whatsapp import WhatsappParser
+from parsers.whatsapp import WhatsAppParser
 from settings.config import IMConfig
 import re
 
@@ -21,7 +21,7 @@ class ParserFactory:
 
 
 factory = ParserFactory()
-factory.register_parser('WhatsApp', WhatsappParser)
+factory.register_parser('WhatsApp', WhatsAppParser)
 factory.register_parser('Telegram', TelegramParser)
 
 

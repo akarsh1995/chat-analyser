@@ -124,23 +124,29 @@ class TelegramConversationObject(Conversation):
 
 class TelegramParser(Parser):
     conversations = []
+    parsed_files = []
 
-    def __init__(self, filepath, *args, **kwargs):
-        super().__init__(filepath, *args, **kwargs)
-        self.parsed_file = json.loads(self.file_text)
+    def __init__(self, file_paths, *args, **kwargs):
+        super().__init__(file_paths, *args, **kwargs)
+        self.load_jsons()
 
     def populate_conversations(self):
         if self.conversations:
             print('Already parsed.')
-        conversations = self.parsed_file['chats']['list']
-        if conversations:
-            for conversation in conversations:
-                conversation_obj = TelegramConversationObject(conversation)
-                if conversation_obj.messages_are_present:
-                    self.conversations.append(conversation_obj)
+        for parsed_file in self.parsed_files:
+            conversations = parsed_file['chats']['list']
+            if conversations:
+                for conversation in conversations:
+                    conversation_obj = TelegramConversationObject(conversation)
+                    if conversation_obj.messages_are_present:
+                        self.conversations.append(conversation_obj)
 
     @property
     def conversations_are_present(self):
         if not self.conversations:
             print("Maybe the file does not contain any conversation.")
         return bool(self.conversations)
+
+    def load_jsons(self):
+        for file_text in self.file_texts:
+            self.parsed_files.append(json.loads(file_text))

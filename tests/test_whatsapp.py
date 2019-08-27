@@ -1,13 +1,13 @@
 import unittest
-from parsers.whatsapp import WhatsappParser
+from parsers.whatsapp import WhatsAppParser
 from datetime import datetime
 
 
-class WhatsappTest(unittest.TestCase):
+class WhatsAppTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        wp = WhatsappParser('./data/whatsapp.txt')
+        wp = WhatsAppParser('./data/whatsapp.txt')
         wp.populate_conversations()
         conversation = wp.conversations[0]
         cls.conversation = conversation
