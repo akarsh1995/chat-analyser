@@ -2,7 +2,7 @@ from message.message import Message, Sender
 from statistics import mean
 from collections import Counter, defaultdict
 import numpy as np
-from NLP.cleaning import WordCloudGenerate
+from NLP.wordcloud import WordCloudGenerate
 import pandas as pd
 from settings.config import IMConfig
 import re
@@ -201,7 +201,7 @@ class Conversation:
             date_times.append(message.date_time)
         date_times = np.array(date_times, dtype=np.datetime64)
         date_times = date_times.astype('datetime64[m]')
-        consecutive_difference = date_times[2:] - date_times[1:-1]
+        consecutive_difference = date_times[1:] - date_times[:-1]
         split_at = consecutive_difference >= time_gap
         split_at = np.insert(split_at, 0, True if split_at[0] else False)
         split_slices = np.where(split_at)
