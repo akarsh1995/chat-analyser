@@ -7,7 +7,6 @@ import pandas as pd
 from settings.config import IMConfig
 import re
 from functools import reduce
-from collections import Counter
 
 
 class Conversation:
