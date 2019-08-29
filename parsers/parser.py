@@ -27,7 +27,7 @@ class Parser:
         pass
 
     def __str__(self):
-        return f"{self.guess_im} Parser Object"
+        return f"Parser Object"
 
     def __repr__(self):
-        return f"Parser('{self.file_paths}')"
+        return f"Parser({self.file_paths})"
